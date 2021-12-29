@@ -65,4 +65,9 @@ class Usuario extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Conta::class);
     }
 
+    public function senhas()
+    {
+        return $this->hasMany(Senha::class);
+    }
+
 }

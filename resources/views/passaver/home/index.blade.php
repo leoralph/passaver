@@ -20,7 +20,7 @@
                         <td>{{$conta->apelido}}</td>
                         <td>{{$conta->credencial}}</td>
                         <td><input class="input-senha" style="width: 90%" type="text" value="{{$conta->id}}" disabled></td>
-                        <td><a href=""><i class="bi-eye-slash mostrar-senha" id="{{Crypt::encryptString($conta->id)}}"></i></a></td>
+                        <td><a href=""><i url="{{route('buscar-senha', ['id' => Crypt::encryptString($conta->id)])}}" class="bi-eye-slash mostrar-senha"></i></a></td>
                     </tr>
                 @endforeach
             </tbody>
@@ -28,5 +28,5 @@
     </div>
 @endsection
 @section('javascript')
-    <script src="{{asset('asset/js/home.js')}}"></script>
+<script src="{{asset('asset/js/home.js')}}"></script>
 @endsection
