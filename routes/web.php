@@ -3,6 +3,7 @@
 use App\Http\Controllers\Passaver\AuthController;
 use App\Http\Controllers\Passaver\ContaController;
 use App\Http\Controllers\Passaver\HomeController;
+use App\Http\Controllers\Passaver\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 Route::group([], function(){
     Route::get('/login', [AuthController::class, 'index'])->name('login');
     Route::post('/login', [AuthController::class, 'autenticar'])->name('autenticar');
+    Route::get('/cadastrar', [UsuarioController::class, 'cadastrarUsuario'])->name('usuario.cadastrar');
+    Route::post('/cadastrar', [UsuarioController::class, 'salvarCadastro'])->name('usuario.salvar-cadastro');
 
     Route::group(['middleware' => 'auth'], function(){
         Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -31,10 +34,16 @@ Route::group([], function(){
         
         Route::group(['middleware' => 'verified'], function(){
             Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(['verified', 'auth']);
-            Route::get('/conta/{id}/buscar-senha', [ContaController::class, 'buscarSenha'])->name('buscar-senha');
+
+            Route::group(['as' => 'conta.'], function(){
+                Route::get('/conta/{id}/buscar-senha', [ContaController::class, 'buscarSenha'])->name('buscar-senha');
+                Route::get('/conta/{id}/excluir', [ContaController::class, 'excluirConta'])->name('excluir');
+            });
+            
+            Route::group(['as' => 'usuario.'], function(){
+                Route::get('/perfil', [UsuarioController::class, 'perfil'])->name('perfil');
+            });
+
         });
     });
-
-
-
 });

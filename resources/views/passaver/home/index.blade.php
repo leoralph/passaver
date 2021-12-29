@@ -19,8 +19,11 @@
                     <tr id="{{$conta->id*2}}">
                         <td>{{$conta->apelido}}</td>
                         <td>{{$conta->credencial}}</td>
-                        <td><input class="input-senha" style="width: 90%" type="text" value="{{$conta->id}}" disabled></td>
-                        <td><a href=""><i url="{{route('buscar-senha', ['id' => Crypt::encryptString($conta->id)])}}" class="bi-eye-slash mostrar-senha"></i></a></td>
+                        <td><input class="input-senha" type="text" value="{{$conta->id}}" disabled></td>
+                        <td>
+                            <a class="mostrar-senha" href="{{route('conta.buscar-senha', ['id' => Crypt::encryptString($conta->id)])}}"><i class="bi-eye-slash"></i></a>
+                            <a class="excluir-conta" href="{{route('conta.excluir', ['id' => Crypt::encryptString($conta->id)])}}"><i class="bi-trash"></i></a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

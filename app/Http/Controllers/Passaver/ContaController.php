@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Passaver;
 
 use App\Http\Controllers\Controller;
+use App\Models\Conta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -19,5 +20,10 @@ class ContaController extends Controller
                 die;
             }
         }
+    }
+
+    public function excluirConta($id)
+    {
+        Conta::find(Crypt::decryptString($id))->delete();
     }
 }

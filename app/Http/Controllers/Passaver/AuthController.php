@@ -7,6 +7,8 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use function Psy\debug;
+
 class AuthController extends Controller
 {
     public function index()
@@ -17,15 +19,15 @@ class AuthController extends Controller
     public function autenticar(Request $request)
     {
         $credenciais = $request->validate([
-            'password' => 'required',
-            'email' => 'required'
+            'senha' => 'required',
+            'email' => 'required|email'
         ]);
 
-        if(Auth::attempt($credenciais)){
+        if(Auth::attempt(['email' => $credenciais['email'], 'password' => $credenciais['senha']], $request->input('remember'))){
             return redirect()->route('home');
         }
 
-        return back()->withErrors('Erro ao efetuar login');
+        return back()->withErrors('Erro ao efetuar login usuário ou senha inválidos.');
     }
 
     public function logout(Request $request)
