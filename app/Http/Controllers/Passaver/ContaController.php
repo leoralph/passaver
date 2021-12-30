@@ -52,7 +52,7 @@ class ContaController extends Controller
         
         foreach (Auth::user()->senhas as $senha) {
             $arraySenha = explode('{passaver}', Crypt::decryptString($senha->senha));
-            if($arraySenha[0] = $conta->id){
+            if($arraySenha[0] == $conta->id){
                 return view('passaver.conta.modal-consultar', [
                     'conta' => $conta,
                     'senha_id' => $senha->id,
