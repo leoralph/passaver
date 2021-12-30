@@ -18,12 +18,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group([], function(){
+
     Route::get('/login', [AuthController::class, 'index'])->name('login');
     Route::post('/login', [AuthController::class, 'autenticar'])->name('autenticar');
     Route::get('/cadastrar', [UsuarioController::class, 'cadastrarUsuario'])->name('usuario.cadastrar');
     Route::post('/cadastrar', [UsuarioController::class, 'salvarCadastro'])->name('usuario.salvar-cadastro');
 
     Route::group(['middleware' => 'auth'], function(){
+
         Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
         Route::group(['as' => 'verification.'], function(){
@@ -35,9 +37,13 @@ Route::group([], function(){
         Route::group(['middleware' => 'verified'], function(){
             Route::get('/', [HomeController::class, 'index'])->name('home')->middleware(['verified', 'auth']);
 
-            Route::group(['as' => 'conta.'], function(){
-                Route::get('/conta/{id}/buscar-senha', [ContaController::class, 'buscarSenha'])->name('buscar-senha');
-                Route::get('/conta/{id}/excluir', [ContaController::class, 'excluirConta'])->name('excluir');
+            Route::group(['as' => 'conta.', 'prefix' => '/conta'], function(){
+                Route::get('/{id}/buscar-senha', [ContaController::class, 'buscarSenha'])->name('buscar-senha');
+                Route::get('/{id}/excluir', [ContaController::class, 'excluirConta'])->name('excluir');
+                Route::get('/cadastrar', [ContaController::class, 'modalCadastrar'])->name('cadastrar');
+                Route::post('/salvar', [ContaController::class, 'salvar'])->name('salvar');
+                Route::get('/consultar/{id}', [ContaController::class, 'consultar'])->name('consultar');
+                Route::post('/atualizar', [ContaController::class, 'atualizar'])->name('atualizar');
             });
             
             Route::group(['as' => 'usuario.'], function(){

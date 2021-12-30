@@ -28,5 +28,7 @@ class UsuarioController extends Controller
         ]);
         
         Usuario::criar($dados);
+
+        return redirect()->route('login');
     }
 }

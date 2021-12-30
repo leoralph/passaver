@@ -2,29 +2,26 @@
 @section('title', 'Passaver - Home')
 @section('content')
     <div class="container">
-        <div class="row">
+        <div class="row mt-2">
             <div class="col">
-                <h2>Olá, {{Auth::user()->nome}}</h2>
+                <h4>Contas</h4>
+            </div>
+            <div class="col text-end">
+                <button class="btn btn-secondary passaver-modal" href="{{route('conta.cadastrar')}}"><i class="bi-plus-lg"></i> Nova</button>
             </div>
         </div>
         <table class="table">
             <thead>
-                <th>Apelido</th>
-                <th>Credencial</th>
-                <th>Senha</th>
-                <th></th>
+                <th scope="col">#</th>
+                <th width="100%%" scope="col">Apelido</th>
+                <th scope="col">Consultar</th>
             </thead>
             <tbody>
                 @foreach (Auth::user()->contas as $conta)
                     <tr id="{{$conta->id*2}}">
+                        <td>{{$loop->iteration}}</td>
                         <td>{{$conta->apelido}}</td>
-                        <td>{{$conta->credencial}}</td>
-                        <td><input class="input-senha" type="text" value="{{$conta->id}}" disabled></td>
-                        <td>
-                            <a class="mostrar-senha" href="{{route('conta.buscar-senha', ['id' => Crypt::encryptString($conta->id)])}}"><i class="bi-eye-slash"></i></a>
-                            <a class="excluir-conta" href="{{route('conta.excluir', ['id' => Crypt::encryptString($conta->id)])}}"><i class="bi-trash"></i></a>
-                        </td>
-                    </tr>
+                        <td class="text-center"><button href="{{route('conta.consultar', ['id' => Crypt::encryptString($conta->id)])}}" class="btn btn-primary btn-sm passaver-modal"><i class="bi-search"></i></button></td>
                 @endforeach
             </tbody>
         </table>

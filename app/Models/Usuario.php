@@ -44,7 +44,7 @@ class Usuario extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function criar(array $data)
+    public static function criar(array $data)
     {
         $usuario = self::create([
             'nome' => $data['nome'],
