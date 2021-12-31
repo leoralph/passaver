@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Passaver;
 
+use App\Ferramentas\UserCrypt;
 use App\Http\Controllers\Controller;
 use App\Models\Conta;
 use App\Models\Senha;
@@ -11,26 +12,25 @@ use Illuminate\Support\Facades\Crypt;
 
 class ContaController extends Controller
 {
-    public function buscarSenha($id)
-    {
-        $conta_id = Crypt::decryptString($id);
-        foreach (Auth::user()->senhas as $senha) {
-            $arraySenha = explode('{passaver}', Crypt::decryptString($senha->senha));
-            if($arraySenha[0] == $conta_id){
-                echo $arraySenha[1];
-                die;
-            }
-        }
-    }
-
-    public function excluirConta($id)
-    {
-        Conta::find(Crypt::decryptString($id))->delete();
-    }
-
     public function modalCadastrar()
     {
         return view('passaver.conta.modal-cadastrar');
+    }
+
+    public function modalConsultar($id)
+    {
+        $conta = Conta::find(Crypt::decryptString($id));
+        
+        foreach (Auth::user()->senhas as $senha) {
+            $arraySenha = explode('{passaver}', UserCrypt::decryptString($senha->senha));
+            if($arraySenha[0] == $conta->id){
+                return view('passaver.conta.modal-consultar', [
+                    'conta' => $conta,
+                    'senha_id' => $senha->id,
+                    'senha' => $arraySenha[1]
+                ]);
+            }
+        }
     }
 
     public function salvar(Request $request)
@@ -46,20 +46,18 @@ class ContaController extends Controller
         return redirect()->route('home');
     }
 
-    public function consultar($id)
+    public function excluirConta($id)
     {
         $conta = Conta::find(Crypt::decryptString($id));
-        
+
         foreach (Auth::user()->senhas as $senha) {
-            $arraySenha = explode('{passaver}', Crypt::decryptString($senha->senha));
+            $arraySenha = explode('{passaver}', UserCrypt::decryptString($senha->senha));
             if($arraySenha[0] == $conta->id){
-                return view('passaver.conta.modal-consultar', [
-                    'conta' => $conta,
-                    'senha_id' => $senha->id,
-                    'senha' => $arraySenha[1]
-                ]);
+                $conta->delete();
+                $senha->delete();
             }
         }
+
     }
 
     public function atualizar(Request $request)
@@ -75,7 +73,7 @@ class ContaController extends Controller
         $conta_id = Crypt::decryptString($dados['conta_id']);
 
         Conta::find($conta_id)->update(['apelido' => $dados['apelido'], 'credencial' => $dados['credencial']]);
-        Senha::find(Crypt::decryptString($dados['senha_id']))->update(['senha' => Crypt::encryptString($conta_id . '{passaver}' . $dados['senha'])]);
+        Senha::find(Crypt::decryptString($dados['senha_id']))->update(['senha' => UserCrypt::encryptString($conta_id . '{passaver}' . $dados['senha'])]);
 
         return redirect()->route('home');
     }

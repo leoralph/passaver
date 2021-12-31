@@ -52,6 +52,8 @@ class Usuario extends Authenticatable implements MustVerifyEmail
             'senha' => Hash::make($data['senha'])
         ]);
 
+        Chave::criarChaveUsuario($usuario);
+
         event(new Registered($usuario));
     }
 

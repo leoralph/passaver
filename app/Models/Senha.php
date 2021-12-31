@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Ferramentas\UserCrypt;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,7 @@ class Senha extends Model
     {
         return self::create([
             'usuario_id' => Auth::user()->id,
-            'senha' => Crypt::encryptString($data['conta_id'] . '{passaver}' . $data['senha'])
+            'senha' => UserCrypt::encryptString($data['conta_id'] . '{passaver}' . $data['senha'])
         ]);
     }
 }
