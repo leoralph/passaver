@@ -3,7 +3,6 @@
 use App\Http\Controllers\Passaver\AdminController;
 use App\Http\Controllers\Passaver\AuthController;
 use App\Http\Controllers\Passaver\ContaController;
-use App\Http\Controllers\Passaver\CryptController;
 use App\Http\Controllers\Passaver\HomeController;
 use App\Http\Controllers\Passaver\UsuarioController;
 use Illuminate\Support\Facades\Route;
@@ -20,8 +19,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group([], function(){
-
-    Route::get('/teste', [CryptController::class, 'teste']);
 
     Route::get('/login', [AuthController::class, 'index'])->name('login');
     Route::post('/login', [AuthController::class, 'autenticar'])->name('autenticar');
@@ -50,7 +47,7 @@ Route::group([], function(){
             });
             
             Route::group(['as' => 'usuario.'], function(){
-                Route::get('/perfil', [CryptController::class, 'teste'])->name('perfil');
+                Route::get('/perfil', [UsuarioController::class, 'perfil'])->name('perfil');
             });
 
             Route::group(['as' => 'admin.', 'middleware' => 'admin', 'prefix' => '/admin'], function(){

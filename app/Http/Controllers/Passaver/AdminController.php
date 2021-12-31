@@ -18,6 +18,8 @@ class AdminController extends Controller
 
     public function recriptografarSenhas(Request $request)
     {
+        return redirect()->route('home');
+        die;
         $request->validate([
             'usuario_id' => 'required'
         ]);
