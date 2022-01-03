@@ -60,7 +60,7 @@ class Usuario extends Authenticatable implements MustVerifyEmail
 
     public function diretorioPrivado()
     {
-        $diretorio = storage_path('app\usuarios\\' . $this->email . '\\');
+        $diretorio = storage_path('app/usuarios/' . $this->email . '/');
 
         if (!is_writable($diretorio)) {
             mkdir($diretorio, 0777, true);
