@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 
 class Usuario extends Authenticatable implements MustVerifyEmail
@@ -57,6 +58,17 @@ class Usuario extends Authenticatable implements MustVerifyEmail
         event(new Registered($usuario));
     }
 
+    public function armazenamentoPessoal()
+    {
+        $diretorio = storage_path('app\usuarios\\' . $this->email . '\\');
+        
+        if(!is_writable($diretorio)){
+            mkdir($diretorio, 0777, true);
+        }
+
+        return Storage::createLocalDriver(['root' => $diretorio]);
+    }
+
     public function getAuthPassword()
     {
         return $this->senha;
@@ -70,6 +82,11 @@ class Usuario extends Authenticatable implements MustVerifyEmail
     public function senhas()
     {
         return $this->hasMany(Senha::class);
+    }
+
+    public function arquivos()
+    {
+        return $this->hasMany(Arquivo::class);
     }
 
 }
