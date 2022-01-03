@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Passaver;
 
 use App\Http\Controllers\Controller;
+use App\Models\Arquivo;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,12 +15,13 @@ class AdminController extends Controller
     {
         return view('passaver.admin.index');
     }
-    
-    public function arquivo(Request $request)
+
+    public function salvarArquivo(Request $request)
     {
-        echo '<pre>';
-        print_r(pathinfo($request->arquivo->getClientOriginalName()));
-        echo '</pre>';
-        exit;
+        $arquivo = $request->file('arquivo');
+        $hashName = pathinfo($arquivo->hashName())['filename'];
+
+        Arquivo::criar($arquivo, $hashName);
+        print_r(Auth::user()->diretorioPrivado()->putFileAs('/', $arquivo, $hashName));
     }
 }

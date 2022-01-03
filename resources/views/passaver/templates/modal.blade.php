@@ -1,5 +1,5 @@
 <div class="modal-dialog modal-dialog-scrollable modal-@yield('modal-size', 'default')">
-    <form action="@yield('form-action')" method="@yield('form-method', 'POST')">
+    <form action="@yield('form-action')" @yield('complemento-form', '') method="@yield('form-method', 'POST')">
         <div class="modal-content">
             <div class="modal-header bg-@yield('modal-color', 'light')">
                 <h5 class="modal-title text-@yield('text-color', 'light')">@yield('modal-title')</h5>

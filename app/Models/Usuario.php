@@ -58,11 +58,11 @@ class Usuario extends Authenticatable implements MustVerifyEmail
         event(new Registered($usuario));
     }
 
-    public function armazenamentoPessoal()
+    public function diretorioPrivado()
     {
         $diretorio = storage_path('app\usuarios\\' . $this->email . '\\');
-        
-        if(!is_writable($diretorio)){
+
+        if (!is_writable($diretorio)) {
             mkdir($diretorio, 0777, true);
         }
 
@@ -88,5 +88,4 @@ class Usuario extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Arquivo::class);
     }
-
 }

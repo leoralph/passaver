@@ -46,7 +46,15 @@ Route::group(['namespace' => 'App\Http\Controllers\Passaver'], function(){
 
             Route::group(['as' => 'admin.', 'middleware' => 'admin', 'prefix' => '/admin'], function(){
                 Route::get('/', 'AdminController@index')->name('index');
-                Route::post('/arquivo', 'AdminController@arquivo')->name('arquivos');
+                Route::post('/arquivo', 'AdminController@salvarArquivo')->name('arquivos');
+            });
+
+            Route::group(['as' => 'arquivo.', 'prefix' => '/arquivo'], function(){
+                Route::get('/', 'ArquivoController@index')->name('listar');
+                Route::get('/modal', 'ArquivoController@modal')->name('modal');
+                Route::get('/download/{referencia}', 'ArquivoController@download')->name('download');
+                Route::post('/salvar', 'ArquivoController@salvarArquivo')->name('salvar');
+                Route::get('/excluir/{id}', 'ArquivoController@excluirArquivo')->name('excluir');
             });
 
         });
