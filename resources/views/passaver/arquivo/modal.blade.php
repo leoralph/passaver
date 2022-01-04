@@ -6,7 +6,7 @@
 
 @section('modal-title', 'SALVAR ARQUIVO')
 
-@section('form-action', route('arquivo.salvar'))
+@section('form-action', route('passaver.arquivo.salvar'))
 
 @section('complemento-form', 'enctype=multipart/form-data')
 
@@ -19,4 +19,9 @@
 @section('modal-footer')
     <button type="submit" class="btn btn-success">Salvar</button>
     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+    <script>
+        $('#form-modal').on('submit', function(){
+            $('#myModal').modal('hide');
+        });
+    </script>
 @endsection

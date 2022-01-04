@@ -17,10 +17,10 @@ class Admin
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::user()->admin) {
+        if (Auth::user()->admin) {
             return $next($request);
         }
 
-        return redirect()->route('home')->withErrors('Você precisa ser um administrador');
+        return redirect()->route('passaver.home')->withErrors('Você precisa ser um administrador');
     }
 }

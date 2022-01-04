@@ -6,8 +6,13 @@
             <div class="col">
                 <h4>Contas</h4>
             </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-6 col-md-2">
+                <input class="form-control form-control-sm" type="text" id="pesquisar" placeholder="Pesquisar">
+            </div>
             <div class="col text-end">
-                <button class="btn btn-secondary passaver-modal" href="{{route('conta.cadastrar')}}"><i class="bi-plus-lg"></i> Nova</button>
+                <button class="mb-1 btn btn-secondary passaver-modal" href="{{route('passaver.conta.cadastrar')}}"><i class="bi-plus-lg"></i> Nova</button>
             </div>
         </div>
         <table class="table">
@@ -16,22 +21,20 @@
                 <th width="100%" scope="col">Apelido</th>
                 <th colspan="2" class="text-center" scope="col">Ações</th>
             </thead>
-            <tbody>
+            <tbody id="tbody">
                 @foreach (Auth::user()->contas as $conta)
-                    <tr id="{{$conta->id*2}}">
+                    <tr>
                         <td>{{$loop->iteration}}</td>
                         <td>{{$conta->apelido}}</td>
                         <td class="text-center">
-                            <button href="{{route('conta.consultar', ['id' => Crypt::encryptString($conta->id)])}}" class="btn btn-secondary btn-sm passaver-modal"><i class="bi-search"></i></button>
+                            <button href="{{route('passaver.conta.consultar', ['id' => Crypt::encryptString($conta->id)])}}" class="btn btn-secondary btn-sm passaver-modal"><i class="bi-search"></i></button>
                         </td>
                         <td class="text-center px-0">
-                            <button href="{{route('conta.excluir', ['id' => Crypt::encryptString($conta->id)])}}" class="btn btn-primary btn-sm excluir-conta"><i class="bi-trash"></i></button>
+                            <button id="{{Crypt::encryptString($conta->id)}}" case="{{Crypt::encryptString(1)}}" class="btn excluir-item btn-primary btn-sm"><i class="bi-trash"></i></button>
                         </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
-@endsection
-@section('javascript')
-<script src="{{asset('asset/js/home.js')}}"></script>
 @endsection

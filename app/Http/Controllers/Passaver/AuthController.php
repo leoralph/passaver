@@ -23,8 +23,8 @@ class AuthController extends Controller
             'email' => 'required|email'
         ]);
 
-        if(Auth::attempt(['email' => $credenciais['email'], 'password' => $credenciais['senha']], $request->input('remember'))){
-            return redirect()->route('home');
+        if (Auth::attempt(['email' => $credenciais['email'], 'password' => $credenciais['senha']], $request->input('remember'))) {
+            return redirect()->route('passaver.home');
         }
 
         return back()->withErrors('Erro ao efetuar login usuário ou senha inválidos.');
@@ -38,7 +38,7 @@ class AuthController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('login');
+        return redirect()->route('passaver.login');
     }
 
     public function naoVerificado()
@@ -49,12 +49,12 @@ class AuthController extends Controller
     public function verificarEmail(EmailVerificationRequest $request)
     {
         $request->fulfill();
-        return redirect()->route('home');
+        return redirect()->route('passaver.home');
     }
 
     public function enviarVerificacao(Request $request)
     {
         $request->user()->sendEmailVerificationNotification();
-        return back()->with('message', 'Verification link sent!');
+        return redirect()->route('passaver.login');
     }
 }

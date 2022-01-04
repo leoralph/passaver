@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row mt-5 justify-content-center">
-            <form action="{{route('autenticar')}}" method="POST" class="col col-md-6 col-lg-4 p-3 bg-secondary rounded">
+            <form action="{{route('passaver.autenticar')}}" method="POST" class="col col-md-6 col-lg-4 p-3 bg-secondary rounded">
                 @csrf
                 <div class="row justify-content-center">
                     <div class="col">
@@ -19,7 +19,7 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col">
-                        <a href="{{route('usuario.cadastrar')}}">Cadastre-se</a>
+                        <a href="{{route('passaver.usuario.cadastrar')}}">Cadastre-se</a>
                     </div>
                     <div class="col-auto">
                         <input type="hidden" name="remember" value="0">

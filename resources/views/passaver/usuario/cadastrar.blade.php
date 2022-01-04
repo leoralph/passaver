@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row mt-5 justify-content-center">
-            <form action="{{route('usuario.salvar-cadastro')}}" method="POST" class="col col-md-6 col-lg-4 p-3 bg-secondary rounded">
+            <form action="{{route('passaver.usuario.salvar-cadastro')}}" method="POST" class="col col-md-6 col-lg-4 p-3 bg-secondary rounded">
                 @csrf
                 <div class="row justify-content-center">
                     <div class="col">
@@ -31,7 +31,7 @@
                 </div>
                 <div class="row mt-3">
                     <div class="col">
-                        <a href="{{route('login')}}">Fazer login</a>
+                        <a href="{{route('passaver.login')}}">Fazer login</a>
                     </div>
                 </div>
                 <div class="row justify-content-center mt-3">

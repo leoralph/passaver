@@ -20,10 +20,10 @@ class ContaController extends Controller
     public function modalConsultar($id)
     {
         $conta = Conta::find(Crypt::decryptString($id));
-        
+
         foreach (Auth::user()->senhas as $senha) {
             $arraySenha = explode('{passaver}', UserCrypt::decryptString($senha->senha));
-            if($arraySenha[0] == $conta->id){
+            if ($arraySenha[0] == $conta->id) {
                 return view('passaver.conta.modal-consultar', [
                     'conta' => $conta,
                     'senha_id' => $senha->id,
@@ -43,21 +43,7 @@ class ContaController extends Controller
 
         Conta::criar($dados);
 
-        return redirect()->route('home');
-    }
-
-    public function excluirConta($id)
-    {
-        $conta = Conta::find(Crypt::decryptString($id));
-
-        foreach (Auth::user()->senhas as $senha) {
-            $arraySenha = explode('{passaver}', UserCrypt::decryptString($senha->senha));
-            if($arraySenha[0] == $conta->id){
-                $conta->delete();
-                $senha->delete();
-            }
-        }
-
+        return redirect()->route('passaver.home');
     }
 
     public function atualizar(Request $request)
@@ -75,6 +61,6 @@ class ContaController extends Controller
         Conta::find($conta_id)->update(['apelido' => $dados['apelido'], 'credencial' => $dados['credencial']]);
         Senha::find(Crypt::decryptString($dados['senha_id']))->update(['senha' => UserCrypt::encryptString($conta_id . '{passaver}' . $dados['senha'])]);
 
-        return redirect()->route('home');
+        return redirect()->route('passaver.home');
     }
 }

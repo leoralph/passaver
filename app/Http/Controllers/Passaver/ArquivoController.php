@@ -42,7 +42,7 @@ class ArquivoController extends Controller
             Auth::user()->diretorioPrivado()->putFileAs('/', $file, $hashName);
         }
 
-        return redirect()->route('arquivo.listar')->withErrors($arrayIndevidos);
+        return redirect()->route('passaver.arquivo.listar')->withErrors($arrayIndevidos);
     }
 
     public function excluirArquivo($id)
@@ -51,6 +51,6 @@ class ArquivoController extends Controller
         Auth::user()->diretorioPrivado()->delete($arquivo->caminhoCompleto());
         $arquivo->delete();
 
-        return redirect()->route('arquivo.listar');
+        return redirect()->route('passaver.arquivo.listar');
     }
 }

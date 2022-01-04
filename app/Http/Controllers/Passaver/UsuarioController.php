@@ -26,9 +26,9 @@ class UsuarioController extends Controller
             'email' => 'required|email',
             'senha' => ['required', 'confirmed', Password::min(8)->letters()->numbers()->mixedCase()]
         ]);
-        
+
         Usuario::criar($dados);
 
-        return redirect()->route('login');
+        return redirect()->route('passaver.login');
     }
 }

@@ -10,29 +10,32 @@
     <title>@yield('title', 'Passaver')</title>
 </head>
 <body>
+    <input type="hidden" id="_url" value="{{url('/')}}">
     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModal" aria-hidden="true"></div>
     <nav class="navbar fs-5 p-2 navbar-dark bg-primary navbar-expand-md">
         <div class="container-fluid">
-            <a href="{{route('home')}}" class="navbar-brand fs-4">Passaver</a>
+            <a href="{{route('passaver.home')}}" class="navbar-brand fs-4">Passaver</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#myNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="myNav">
-                <ul class="navbar-nav ms-3 me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('arquivo.listar')}}"><i class="bi-file-post"></i> Arquivos</a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav ms-auto">
-                    @if (Request::path() != 'login' && Request::path() != 'cadastrar')
-                        <li class="nav-item">
-                            <a href="{{route('usuario.perfil')}}" class="nav-link {{Request::path() == 'perfil' ? 'active' : ''}}"><i class="bi-person"></i> {{Auth::user()->nome}}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{route('logout')}}" class="nav-link"><i class="bi-power"></i> Sair</a>
-                        </li>
+                @if (Request::path() != 'login' && Request::path() != 'cadastrar')
+                    @if (Auth::user()->hasVerifiedEmail())
+                        <ul class="navbar-nav ms-3 me-auto">
+                            <li class="nav-item">
+                                <a class="nav-link {{strpos(Request::path(), 'arquivo') === false ? '' : 'active'}}" href="{{route('passaver.arquivo.listar')}}"><i class="bi-file-post"></i> Arquivos</a>
+                            </li>
+                        </ul>
                     @endif
-                </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a href="{{route('passaver.usuario.perfil')}}" class="nav-link {{strpos(Request::path(), 'perfil') === false ? '' : 'active'}}"><i class="bi-person"></i> {{Auth::user()->nome}}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('passaver.logout')}}" class="nav-link"><i class="bi-power"></i> Sair</a>
+                        </li>
+                    </ul>
+                @endif
             </div>
         </div>
     </nav>

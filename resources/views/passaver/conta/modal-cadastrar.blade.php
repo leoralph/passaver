@@ -6,7 +6,7 @@
 
 @section('modal-title', 'CADASTRAR CONTA')
 
-@section('form-action', route('conta.salvar'))
+@section('form-action', route('passaver.conta.salvar'))
 
 @section('modal-body')
     @csrf

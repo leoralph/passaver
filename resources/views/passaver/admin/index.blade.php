@@ -3,7 +3,7 @@
 @section('content')
     @dd(Auth::user()->diretorioPrivado()->size('/'))
     <div class="container">
-        <form action="{{route('admin.arquivos')}}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('passaver.admin.arquivos')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="file" name="arquivo" id="arquivo">
             <input type="submit" value="">

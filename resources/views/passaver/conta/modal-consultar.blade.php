@@ -6,7 +6,7 @@
 
 @section('modal-title', 'CONSULTAR CONTA')
 
-@section('form-action', route('conta.atualizar'))
+@section('form-action', route('passaver.conta.atualizar'))
 
 @section('modal-body')
     @csrf

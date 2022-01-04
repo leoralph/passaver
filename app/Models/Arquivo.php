@@ -20,6 +20,11 @@ class Arquivo extends Model
         'tamanho'
     ];
 
+    protected $dates = [
+        'created_at',
+        'updated_at'
+    ];
+
     public static function criar(UploadedFile $arquivo, $hashName, $diretorio = '/'){
         $nome = pathinfo($arquivo->getClientOriginalName())['filename'];
         $extensao = pathinfo($arquivo->getClientOriginalName())['extension'];
