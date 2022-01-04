@@ -38,19 +38,16 @@ Route::group(['namespace' => 'App\Http\Controllers\Passaver'], function(){
                 Route::delete('/excluir', 'ExclusaoController@confirmarExclusao')->name('confirmar-exclusao');
 
                 Route::group(['as' => 'conta.', 'prefix' => '/conta'], function(){
-                    Route::get('/cadastrar', 'ContaController@modalCadastrar')->name('cadastrar');
+                    Route::get('/modal/{id?}', 'ContaController@modal')->name('modal');
                     Route::post('/salvar', 'ContaController@salvar')->name('salvar');
-                    Route::get('/consultar/{id}', 'ContaController@modalConsultar')->name('consultar');
-                    Route::post('/atualizar', 'ContaController@atualizar')->name('atualizar');
+                });
+
+                Route::group(['as' => 'senha.', 'prefix' => '/senha'], function(){
+                    Route::get('/gerar', 'SenhaController@gerar')->name('gerar');
                 });
                 
                 Route::group(['as' => 'usuario.'], function(){
                     Route::get('/perfil', 'UsuarioController@perfil')->name('perfil');
-                });
-
-                Route::group(['as' => 'admin.', 'middleware' => 'admin', 'prefix' => '/admin'], function(){
-                    Route::get('/', 'AdminController@index')->name('index');
-                    Route::post('/arquivo', 'AdminController@salvarArquivo')->name('arquivos');
                 });
 
                 Route::group(['as' => 'arquivo.', 'prefix' => '/arquivo'], function(){

@@ -76,7 +76,7 @@ class Usuario extends Authenticatable implements MustVerifyEmail
 
     public function contas()
     {
-        return $this->hasMany(Conta::class);
+        return $this->hasMany(Conta::class)->orderBy('apelido');
     }
 
     public function senhas()

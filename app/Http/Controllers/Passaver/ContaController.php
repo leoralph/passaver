@@ -12,19 +12,22 @@ use Illuminate\Support\Facades\Crypt;
 
 class ContaController extends Controller
 {
-    public function modalCadastrar()
+    public function modal($id = null)
     {
-        return view('passaver.conta.modal-cadastrar');
-    }
-
-    public function modalConsultar($id)
-    {
+        if(empty($id)){
+            return view('passaver.conta.modal-conta', [
+                'conta' => new Conta(),
+                'senha_id' => '',
+                'senha' => ''
+            ]);
+        }
+        
         $conta = Conta::find(Crypt::decryptString($id));
 
         foreach (Auth::user()->senhas as $senha) {
             $arraySenha = explode('{passaver}', UserCrypt::decryptString($senha->senha));
             if ($arraySenha[0] == $conta->id) {
-                return view('passaver.conta.modal-consultar', [
+                return view('passaver.conta.modal-conta', [
                     'conta' => $conta,
                     'senha_id' => $senha->id,
                     'senha' => $arraySenha[1]
@@ -35,19 +38,19 @@ class ContaController extends Controller
 
     public function salvar(Request $request)
     {
-        $dados = $request->validate([
-            'apelido' => 'required',
-            'credencial' => 'required',
-            'senha' => 'required'
-        ]);
+        if(empty(Crypt::decryptString($request->input('conta_id')))){
 
-        Conta::criar($dados);
+            $dados = $request->validate([
+                'apelido' => 'required',
+                'credencial' => 'required',
+                'senha' => 'required'
+            ]);
+    
+            Conta::criar($dados);
+    
+            return redirect()->route('passaver.home');
+        }
 
-        return redirect()->route('passaver.home');
-    }
-
-    public function atualizar(Request $request)
-    {
         $dados = $request->validate([
             'conta_id' => 'required',
             'senha_id' => 'required',

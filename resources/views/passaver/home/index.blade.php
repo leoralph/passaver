@@ -12,7 +12,7 @@
                 <input class="form-control form-control-sm" type="text" id="pesquisar" placeholder="Pesquisar">
             </div>
             <div class="col text-end">
-                <button class="mb-1 btn btn-secondary passaver-modal" href="{{route('passaver.conta.cadastrar')}}"><i class="bi-plus-lg"></i> Nova</button>
+                <button class="mb-1 btn btn-secondary passaver-modal" href="{{route('passaver.conta.modal')}}"><i class="bi-plus-lg"></i> Nova</button>
             </div>
         </div>
         <table class="table">
@@ -27,7 +27,7 @@
                         <td>{{$loop->iteration}}</td>
                         <td>{{$conta->apelido}}</td>
                         <td class="text-center">
-                            <button href="{{route('passaver.conta.consultar', ['id' => Crypt::encryptString($conta->id)])}}" class="btn btn-secondary btn-sm passaver-modal"><i class="bi-search"></i></button>
+                            <button href="{{route('passaver.conta.modal', ['id' => Crypt::encryptString($conta->id)])}}" class="btn btn-secondary btn-sm passaver-modal"><i class="bi-search"></i></button>
                         </td>
                         <td class="text-center px-0">
                             <button id="{{Crypt::encryptString($conta->id)}}" case="{{Crypt::encryptString(1)}}" class="btn excluir-item btn-primary btn-sm"><i class="bi-trash"></i></button>
