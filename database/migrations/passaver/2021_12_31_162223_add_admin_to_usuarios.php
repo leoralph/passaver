@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Schema;
 
 class AddAdminToUsuarios extends Migration
 {
+    protected $connection = 'passaver';
+
     /**
      * Run the migrations.
      *

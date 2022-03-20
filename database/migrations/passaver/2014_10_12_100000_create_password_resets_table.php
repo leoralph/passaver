@@ -4,8 +4,10 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateChavesTable extends Migration
+class CreatePasswordResetsTable extends Migration
 {
+    protected $connection = 'passaver';
+
     /**
      * Run the migrations.
      *
@@ -13,12 +15,10 @@ class CreateChavesTable extends Migration
      */
     public function up()
     {
-        Schema::create('chaves', function (Blueprint $table) {
-            $table->id();
-            $table->string('tipo_chave');
-            $table->string('chave', 510);
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::create('password_resets', function (Blueprint $table) {
+            $table->string('email')->index();
+            $table->string('token');
+            $table->timestamp('created_at')->nullable();
         });
     }
 
@@ -29,6 +29,6 @@ class CreateChavesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('chaves');
+        Schema::dropIfExists('password_resets');
     }
 }

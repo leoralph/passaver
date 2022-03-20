@@ -1,11 +1,12 @@
 <?php
-namespace App\Ferramentas;
 
-use App\Models\Chave;
+namespace App\Ferramentas\Passaver;
+
+use App\Models\Passaver\Chave;
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Support\Facades\Auth;
 
-class UserCrypt 
+class UserCrypt
 {
 
     public static function encryptString($value)

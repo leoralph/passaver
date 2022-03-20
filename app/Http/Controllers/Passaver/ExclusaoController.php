@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Passaver;
 
-use App\Ferramentas\UserCrypt;
+use App\Ferramentas\Passaver\UserCrypt;
 use App\Http\Controllers\Controller;
-use App\Models\Arquivo;
-use App\Models\Conta;
+use App\Models\Passaver\Arquivo;
+use App\Models\Passaver\Conta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Crypt;
 class ExclusaoController extends Controller
 {
     public function modal(Request $request)
-    {   
+    {
         $dados = $request->validate([
             'target' => 'required',
             'case' => 'required'
@@ -28,10 +28,10 @@ class ExclusaoController extends Controller
             'case' => 'required|min:60',
             'target' => 'required|min:60'
         ]);
-        
+
         $case = Crypt::decryptString($request->input('case'));
         $target = Crypt::decryptString($request->input('target'));
-        
+
         switch ($case) {
             case 1:
                 //Exclusão de conta

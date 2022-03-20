@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Passaver;
 
 use App\Http\Controllers\Controller;
-use App\Models\Arquivo;
+use App\Models\Passaver\Arquivo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;

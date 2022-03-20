@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Passaver;
 
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -10,10 +10,13 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
-class Usuario extends Authenticatable implements MustVerifyEmail
+class Usuario extends Authenticatable implements MustVerifyEmail, JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
+
+    protected $connection = 'passaver';
 
     /**
      * The attributes that are mass assignable.
@@ -87,5 +90,15 @@ class Usuario extends Authenticatable implements MustVerifyEmail
     public function arquivos()
     {
         return $this->hasMany(Arquivo::class);
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }

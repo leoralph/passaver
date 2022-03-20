@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Passaver;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Crypt;
 class Chave extends Model
 {
     use HasFactory;
+
+    protected $connection = 'passaver';
 
     protected $fillable = [
         'tipo_chave',

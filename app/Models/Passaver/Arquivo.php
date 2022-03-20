@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Passaver;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 class Arquivo extends Model
 {
     use HasFactory;
+
+    protected $connection = 'passaver';
 
     protected $fillable = [
         'usuario_id',

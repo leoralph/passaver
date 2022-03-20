@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Passaver;
 
-use App\Ferramentas\UserCrypt;
+use App\Ferramentas\Passaver\UserCrypt;
 use App\Http\Controllers\Controller;
-use App\Models\Conta;
-use App\Models\Senha;
+use App\Models\Passaver\Conta;
+use App\Models\Passaver\Senha;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -14,14 +14,14 @@ class ContaController extends Controller
 {
     public function modal($id = null)
     {
-        if(empty($id)){
+        if (empty($id)) {
             return view('passaver.conta.modal-conta', [
                 'conta' => new Conta(),
                 'senha_id' => '',
                 'senha' => ''
             ]);
         }
-        
+
         $conta = Conta::find(Crypt::decryptString($id));
 
         foreach (Auth::user()->senhas as $senha) {
@@ -38,16 +38,16 @@ class ContaController extends Controller
 
     public function salvar(Request $request)
     {
-        if(empty(Crypt::decryptString($request->input('conta_id')))){
+        if (empty(Crypt::decryptString($request->input('conta_id')))) {
 
             $dados = $request->validate([
                 'apelido' => 'required',
                 'credencial' => 'required',
                 'senha' => 'required'
             ]);
-    
+
             Conta::criar($dados);
-    
+
             return redirect()->route('passaver.home');
         }
 

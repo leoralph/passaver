@@ -4,8 +4,10 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSenhasTable extends Migration
+class CreateUsuariosTable extends Migration
 {
+    protected $connection = 'passaver';
+    
     /**
      * Run the migrations.
      *
@@ -13,11 +15,15 @@ class CreateSenhasTable extends Migration
      */
     public function up()
     {
-        Schema::create('senhas', function (Blueprint $table) {
+        Schema::create('usuarios', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('usuario_id')->constrained();
+            $table->string('nome');
+            $table->string('email')->unique();
             $table->string('senha');
+            $table->timestamp('email_verified_at')->nullable();
+            $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -28,6 +34,6 @@ class CreateSenhasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('senhas');
+        Schema::dropIfExists('usuarios');
     }
 }

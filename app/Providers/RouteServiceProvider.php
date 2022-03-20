@@ -45,7 +45,15 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->namespace($this->namespace)
+                ->domain(parse_url(config('app.url'), PHP_URL_HOST))
                 ->group(base_path('routes/web.php'));
+
+            Route::domain('passaver.' . parse_url(config('app.url'), PHP_URL_HOST))
+                ->namespace("App\Http\Controllers\Passaver")
+                ->group(function(){
+                    Route::group(['middleware' => 'web'], base_path('routes/passaver/web.php'));    
+                    Route::group(['middleware' => 'api', 'prefix' => 'api'], base_path('routes/passaver/api.php'));
+            });
         });
     }
 
