@@ -18,7 +18,8 @@
         "postcss": "^8.1.14",
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.51.0",
-        "sass-loader": "^12.1.0"
+        "sass-loader": "^12.1.0",
+        "webpack-livereload-plugin": "^1.2.0"
     },
     "dependencies": {
         "axios": "^0.27.2",

@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const liveReload = require('webpack-livereload-plugin')
 
 /*
  |--------------------------------------------------------------------------
@@ -16,3 +17,6 @@ mix
     .react()
     .sass('resources/sass/app.scss', 'public/css')
     .disableNotifications()
+    .webpackConfig({
+        plugins: [new liveReload()]
+    })

@@ -10,5 +10,8 @@
 </head>
 <body>
     <div id="root"></div>
+    @env('local')
+        <script src="http://localhost:35729/livereload.js"></script>
+    @endenv
 </body>
 </html>
