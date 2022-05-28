@@ -16,7 +16,7 @@ mix
     .js('resources/js/app.jsx', 'public/js')
     .react()
     .sass('resources/sass/app.scss', 'public/css')
-    .disableNotifications()
     .webpackConfig({
         plugins: [new liveReload()]
     })
+    .disableNotifications()

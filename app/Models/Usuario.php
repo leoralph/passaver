@@ -34,6 +34,10 @@ class Usuario extends Authenticatable implements MustVerifyEmail
      */
     protected $hidden = [
         'senha',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+        'email_verified_at',
         'remember_token',
     ];
 

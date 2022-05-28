@@ -18,12 +18,20 @@ Route::group(['namespace' => 'App\Http\Controllers\\', 'prefix' => '/v1'], funct
 
     Route::post('/login', 'AuthController@login');
     Route::get('/logout', 'AuthController@logout');
+    Route::get('/usuario', 'UsuarioController@show');
     Route::post('/usuario', 'UsuarioController@store');
 
     Route::group(['middleware' => 'auth:sanctum'], function(){
 
-        Route::get('/contas/{id}', 'ContaController@show');
-        Route::get('/contas', 'ContaController@index');
+        Route::prefix('/conta')->group(function(){
+            Route::get('/', 'ContaController@index');
+            Route::get('/{id}', 'ContaController@show');
+            Route::post('/', 'ContaController@store');
+            Route::patch('/{id}', 'ContaController@update');
+            Route::delete('/{id}', 'ContaController@destroy');
+        });
+
+        Route::get('/senha', 'SenhaController@show');
 
     });
 

@@ -20,8 +20,8 @@ class Senha extends Model
     public static function criar(array $data)
     {
         return self::create([
-            'usuario_id' => Auth::user()->id,
-            'senha' => UserCrypt::encryptString($data['conta_id'] . '{passaver}' . $data['senha'])
+            'usuario_id' => auth()->user()->id,
+            'senha' => auth()->user()->crypt($data['conta_id'] . '{passaver}' . $data['senha'])
         ]);
     }
 }

@@ -26,13 +26,28 @@ class Conta extends Model
         $conta = self::create([
             'apelido' => $data['apelido'],
             'credencial' => $data['credencial'],
-            'usuario_id' => Auth::user()->id
+            'usuario_id' => auth()->user()->id
         ]);
 
         Senha::criar([
             'conta_id' => $conta->id,
             'senha' => $data['senha']
         ]);
+    }
+
+    public static function atualizar($id, array $data)
+    {
+        $conta = self::find($id);
+        $senha = $conta->getSenha();
+
+        $conta->update([
+            'apelido' => $data['apelido'],
+            'credencial' => $data['credencial']
+        ]);
+        Senha::find($senha->id)
+            ->update([
+                'senha' => auth()->user()->crypt("$id{passaver}{$data['senha']}")
+            ]);
     }
 
     public function getSenha()

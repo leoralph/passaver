@@ -6,7 +6,8 @@ import RowRemember from "../../components/auth/login/RowRemember"
 import RowSenha from "../../components/auth/RowSenha"
 import RowSubmit from "../../components/auth/RowSubmit"
 import { useNavigate } from "react-router-dom"
-import cookie from "react-cookies"
+import { useDispatch } from "react-redux"
+import { changeUser } from "../../redux/slices/authSlice"
 
 const initialState = {
     email: "",
@@ -17,14 +18,14 @@ const initialState = {
 const Login = () => {
     const [input, setInput] = useState(initialState)
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const login = async (e) => {
         e.preventDefault()
         getCSRF().then(() => {
-            let login = api.post("/login", input)
-            login
-                .then(() => {
-                    cookie.save('logged', true)
+            api.post("/login", input)
+                .then(res => {
+                    dispatch(changeUser(res.data.usuario))
                     navigate('/')
                 })
                 .catch(err => console.log(err))
@@ -34,7 +35,6 @@ const Login = () => {
     useEffect(() => {
         document.title = 'Passaver - Login'
     }, [])
-
 
     const handleChange = (e) => {
         let target = e.target;

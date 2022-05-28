@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
-class UsuarioController extends Controller
+class SenhaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,34 +24,43 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        $validacao = Validator::make($request->all(), [
-            'nome' => 'required',
-            'email' => 'required|email|unique:usuarios',
-            'senha' => 'required|confirmed',
-        ]);
-
-        if ($validacao->fails()) {
-            return response()->json($validacao->errors(), 403);
-        }
-
-
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show()
     {
-        if (auth()->check()) {
-            return response()->json([
-                'usuario' => auth()->user()
-            ]);
-        }
+        $letras = 'abcdefghijklmnopqrstuvwxyz';
+        $maiusculas = strtoupper($letras);
+        $numeros = '0123456789';
+        $especiais = '!@#$%&*()^?/';
 
-        return response()->json([], 406);
+        $senha = '';
+
+        for($i = 0; $i < 16; $i++){
+            switch (random_int(1,4)) {
+                case 1:
+                    $senha .= $letras[random_int(0, strlen($letras)-1)];
+                    break;
+                case 2:
+                    $senha .= $numeros[random_int(0, strlen($numeros)-1)];
+                    break;
+                case 3:
+                    $senha .= $maiusculas[random_int(0, strlen($maiusculas)-1)];
+                    break;
+                case 4:
+                    $senha .= $especiais[random_int(0, strlen($especiais)-1)];
+                    break;
+            }
+        }
+    
+        return response()->json([
+            'pwd' => $senha
+        ]);
     }
 
     /**

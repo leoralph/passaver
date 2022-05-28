@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Conta;
+use App\Models\Senha;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ContaController extends Controller
 {
@@ -24,7 +27,17 @@ class ContaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validacao = Validator::make($request->all(), [
+            'apelido' => 'required',
+            'credencial' => 'required',
+            'senha' => 'required'
+        ]);
+
+        if ($validacao->fails()) {
+            return response()->json($validacao->errors(), 422);
+        }
+
+        Conta::criar($validacao->validated());
     }
 
     /**
@@ -45,7 +58,6 @@ class ContaController extends Controller
 
         return response()->json([
             'id' => $conta->id,
-            'id_senha' => $senha->id,
             'apelido' => $conta->apelido,
             'credencial' => $conta->credencial,
             'senha' => $senha->senha
@@ -61,7 +73,19 @@ class ContaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validacao = Validator::make($request->all(), [
+            'apelido' => 'required',
+            'credencial' => 'required',
+            'senha' => 'required'
+        ]);
+
+        if ($validacao->fails()) {
+            return response()->json($validacao->errors(), 422);
+        }
+
+        Conta::atualizar($id, $validacao->validated());
+
+        return response([], 204);
     }
 
     /**
@@ -72,6 +96,10 @@ class ContaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $conta = auth()->user()->contas->find($id);
+
+        Senha::destroy($conta->getSenha()->id);
+
+        $conta->delete();
     }
 }

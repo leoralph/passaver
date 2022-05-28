@@ -25,7 +25,9 @@ class AuthController extends Controller
         if ($auth) {
             $request->session()->regenerate();
 
-            return response()->json([], 204);
+            return response()->json([
+                'usuario' => auth()->user()
+            ]);
         }
 
         return response()->json(['msg' => 'Credenciais Inválidas'], 403);
