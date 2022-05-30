@@ -1,9 +1,9 @@
 import { Button, Modal } from "react-bootstrap";
-import api from "../../../util/api";
+import api from "../../util/api";
 
 const ModalExclusao = props => {
     const handleExclusao = () => {
-        api.delete(`/conta/${props.idConta}`).then(() => {
+        api.delete(`/${props.objeto}/${props.target}`).then(() => {
             props.reload();
             props.handleClose();
         });
@@ -14,7 +14,7 @@ const ModalExclusao = props => {
             <Modal.Header className="bg-warning text-light">
                 <Modal.Title>EXCLUIR CONTA</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Deseja confirmar a exclusão da conta "{props.apelido}"?</Modal.Body>
+            <Modal.Body>Deseja confirmar a exclusão do(a) {props.objeto} "{props.nome}"?</Modal.Body>
             <Modal.Footer>
                 <Button onClick={handleExclusao} variant="success">
                     <i className="bi-check-lg"></i> Sim

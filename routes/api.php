@@ -27,8 +27,15 @@ Route::group(['namespace' => 'App\Http\Controllers\\', 'prefix' => '/v1'], funct
             Route::get('/', 'ContaController@index');
             Route::get('/{id}', 'ContaController@show');
             Route::post('/', 'ContaController@store');
+            Route::post('/importar', 'ContaController@importar');
             Route::patch('/{id}', 'ContaController@update');
             Route::delete('/{id}', 'ContaController@destroy');
+        });
+
+        Route::prefix('/arquivo')->group(function(){
+            Route::get('/', 'ArquivoController@index');
+            Route::post('/', 'ArquivoController@store');
+            Route::delete('/{id}', 'ArquivoController@destroy');
         });
 
         Route::get('/senha', 'SenhaController@show');

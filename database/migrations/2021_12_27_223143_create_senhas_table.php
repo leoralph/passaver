@@ -16,7 +16,7 @@ class CreateSenhasTable extends Migration
         Schema::create('senhas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('usuario_id')->constrained();
-            $table->string('senha');
+            $table->string('senha', 1024);
             $table->timestamps();
         });
     }

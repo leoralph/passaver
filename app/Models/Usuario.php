@@ -6,6 +6,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Encryption\Encrypter;
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -63,9 +64,9 @@ class Usuario extends Authenticatable implements MustVerifyEmail
         event(new Registered($usuario));
     }
 
-    public function diretorioPrivado()
+    public function diretorioPrivado() : FilesystemAdapter
     {
-        $diretorio = storage_path('passaver/usuarios/' . $this->email . '/');
+        $diretorio = storage_path('app/usuarios/' . $this->email . '/');
 
         if (!is_writable($diretorio)) {
             mkdir($diretorio, 0777, true);

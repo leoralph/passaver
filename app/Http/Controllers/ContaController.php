@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Conta;
 use App\Models\Senha;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class ContaController extends Controller
@@ -14,9 +15,11 @@ class ContaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return auth()->user()->contas;
+        return response()->json([
+            'contas' => auth()->user()->contas
+        ]);
     }
 
     /**
@@ -101,5 +104,26 @@ class ContaController extends Controller
         Senha::destroy($conta->getSenha()->id);
 
         $conta->delete();
+    }
+
+    /**
+     * Importa contas à partir da planilha csv do google
+     * 
+     * @param Request $request 
+     * @return \Illuminate\Http\Response 
+     */
+    public function importar(Request $request)
+    {
+        $planilha = fopen($request->file('files')[0], 'r');
+        while (($linha = fgetcsv($planilha)) !== false) {
+            if ($linha[0] == 'name' && $linha[1] == 'url') continue;
+            if ($linha[0] && $linha[2] && $linha[3]) {
+                Conta::criar([
+                    'apelido' => $linha[0],
+                    'credencial' => $linha[2],
+                    'senha' => $linha[3]
+                ]);
+            }
+        }
     }
 }

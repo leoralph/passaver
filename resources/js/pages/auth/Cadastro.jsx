@@ -17,13 +17,14 @@ const initialState = {
 
 const Cadastro = (props) => {
     const [input, setInput] = useState(initialState);
+    const [errors, setErrors] = useState({})
 
     const handleSubmit = e => {
         e.preventDefault();
         let cadastro = api.post("/usuario", input)
         cadastro
             .then(res => console.log(res))
-            .catch(err => console.log(err))
+            .catch(err => setErrors(err.response.data))
     }
 
     const handleChange = e => {
@@ -38,9 +39,9 @@ const Cadastro = (props) => {
             <Row className="mt-5 justify-content-center">
                 <Col xs md="6" lg="4" className="p-3 bg-secondary rounded">
                     <Form onSubmit={handleSubmit}>
-                        <RowNome onChange={handleChange} value={input.nome} />
-                        <RowEmail onChange={handleChange} value={input.email} className="mt-2" />
-                        <RowSenha onChange={handleChange} value={input.senha} />
+                        <RowNome errors={errors} onChange={handleChange} value={input.nome} />
+                        <RowEmail errors={errors} onChange={handleChange} value={input.email} className="mt-2" />
+                        <RowSenha errors={errors} onChange={handleChange} value={input.senha} />
                         <RowSenhaConfirmation onChange={handleChange} value={input.senha_confirmation} />
                         <Row className="mt-3">
                             <Col>

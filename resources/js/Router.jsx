@@ -5,6 +5,7 @@ import Cadastro from "./pages/auth/Cadastro";
 import Login from "./pages/auth/Login";
 import Home from "./pages/Home";
 import Arquivos from "./pages/Arquivos";
+import Perfil from "./pages/Perfil";
 
 const Router = () => {
     return (
@@ -15,6 +16,7 @@ const Router = () => {
                 <Route path="/cadastro" element={<Cadastro />} />
                 <Route path="/" element={<ProtectedPage page={Home} />} />
                 <Route path="/arquivos" element={<ProtectedPage page={Arquivos} />} />
+                <Route path="/perfil" element={<ProtectedPage page={Perfil} />} />
             </Routes>
         </BrowserRouter>
     );

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { authApi } from "../util/api";
-import ModalConta from "../components/home/modal/ModalConta";
+import ModalConta from "../components/home/ModalConta";
 import TableContas from "../components/home/TableContas";
-import ModalExclusao from "../components/home/modal/ModalExclusao";
+import ModalExclusao from "../components/modal/ModalExclusao";
 
 const Home = () => {
     document.title = "Passaver - Principal";
@@ -17,7 +17,7 @@ const Home = () => {
     const [batch, setBatch] = useState(0);
 
     useEffect(() => {
-        authApi.get("/conta").then(result => setContas(result.data));
+        authApi.get("/conta").then(result => setContas(result.data.contas));
     }, [batch]);
 
     const handleCloseConta = () => {
@@ -40,9 +40,9 @@ const Home = () => {
         setShowExclusao(true);
     };
 
-    const reloadContas = () => {
-        setBatch(batch + 1);
-    };
+    const reloadContas = () => setBatch(batch + 1);
+
+    const pesquisar = e => {};
 
     return (
         <Container>
@@ -63,7 +63,7 @@ const Home = () => {
             </Row>
             <TableContas handleOpenExclusao={handleOpenExclusao} handleOpenConta={handleOpenConta} contas={contas} />
             <ModalConta reload={reloadContas} idConta={idConta} show={showConta} handleClose={handleCloseConta} />
-            <ModalExclusao apelido={apelido} reload={reloadContas} idConta={idConta} show={showExclusao} handleClose={handleCloseExclusao} />
+            <ModalExclusao objeto="conta" nome={apelido} reload={reloadContas} target={idConta} show={showExclusao} handleClose={handleCloseExclusao} />
         </Container>
     );
 };

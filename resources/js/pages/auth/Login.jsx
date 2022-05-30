@@ -17,6 +17,7 @@ const initialState = {
 
 const Login = () => {
     const [input, setInput] = useState(initialState)
+    const [errors, setErrors] = useState({});
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -28,7 +29,7 @@ const Login = () => {
                     dispatch(changeUser(res.data.usuario))
                     navigate('/')
                 })
-                .catch(err => console.log(err))
+                .catch(err => setErrors(err.response.data))
         });
     }
 
@@ -50,8 +51,8 @@ const Login = () => {
             <Row className="mt-5 justify-content-center">
                 <Col xs md="6" lg="4" className="mx-2 mx-lg-0 p-3 bg-secondary rounded">
                     <Form onSubmit={login}>
-                        <RowEmail onChange={handleChange} value={input.email}/>
-                        <RowSenha onChange={handleChange} value={input.senha}/>
+                        <RowEmail errors={errors} onChange={handleChange} value={input.email}/>
+                        <RowSenha errors={errors} onChange={handleChange} value={input.senha}/>
                         <RowRemember onChange={handleChange} checked={input.remember} />
                         <RowSubmit>ENTRAR</RowSubmit>
                     </Form>

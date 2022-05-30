@@ -14,16 +14,16 @@ const TableArquivos = props => {
             </thead>
             <tbody>
                 {props.arquivos.map((arquivo, index) => (
-                    <tr>
-                        <td>{index}</td>
+                    <tr key={index}>
+                        <td>{index + 1}</td>
                         <td width="100%">
                             <a>{arquivo.nome}</a>
                         </td>
                         <td className="d-none text-nowrap d-lg-table-cell">{arquivo.created_at}</td>
                         <td className="d-none text-nowrap d-lg-table-cell">{arquivo.tamanho}</td>
                         <td className="text-center">
-                            <Button variant="danger" size="sm">
-                                <i class="bi-trash"></i>
+                            <Button onClick={() => props.handleOpenExclusao(arquivo.id, arquivo.nome)} variant="danger" size="sm">
+                                <i className="bi-trash"></i>
                             </Button>
                         </td>
                     </tr>
